@@ -17,7 +17,6 @@ namespace GameOnline.Mechanics
         IEnumerator destroyBullet()
         {
             yield return new WaitForSeconds(destroyTime);
-            Destroy(this.gameObject);
             this.GetComponent<PhotonView>().RPC("destroy", RpcTarget.AllBuffered);
         }
 
