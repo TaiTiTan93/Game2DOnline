@@ -22,8 +22,8 @@ namespace GameOnline.Mechanics
 
         private void Awake()
         {
-            currenHealth = maxHealth;
-            healthbar.SetMaxHealth(maxHealth);
+            //currenHealth = maxHealth;
+            //healthbar.SetMaxHealth(maxHealth);
 
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -68,18 +68,18 @@ namespace GameOnline.Mechanics
             targetVelocity = move * maxSpeed;
 
             // take damage
-            if(Input.GetKeyDown(KeyCode.D))
-            {
-                TakeDamage(20);
-            }
+            //if(Input.GetKeyDown(KeyCode.D))
+            //{
+            //    TakeDamage(20);
+            //}
         }
 
-        void TakeDamage(int damage)
-        {
-            currenHealth -= damage;
+        //void TakeDamage(int damage)
+        //{
+        //    currenHealth -= damage;
 
-            healthbar.SetHealth(currenHealth);
-        }
+        //    healthbar.SetHealth(currenHealth);
+        //}
     }
 }
 

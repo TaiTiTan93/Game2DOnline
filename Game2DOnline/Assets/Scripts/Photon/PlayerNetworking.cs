@@ -18,12 +18,19 @@ namespace GameOnline.Photon
         public Transform firePointRight;
         public Transform firePointLeft;
 
+        public int maxHealth = 100;
+        public int currenHealth;
+        public Healthbar healthbar;
+
         private PhotonView photonView;
         private Collider2D colliderPlayer;
 
         // Start is called before the first frame update
         void Start()
         {
+            currenHealth = maxHealth;
+            healthbar.SetMaxHealth(maxHealth);
+
             spriteRenderer = GetComponent<SpriteRenderer>();
             photonView = GetComponent<PhotonView>();
             colliderPlayer = GetComponent<Collider2D>();
@@ -35,6 +42,7 @@ namespace GameOnline.Photon
                 }
                 playerCamera.SetActive(false);
                 colliderPlayer.isTrigger = true;
+                spriteRenderer.color = Color.yellow;
             }
         }
 
@@ -47,7 +55,11 @@ namespace GameOnline.Photon
                 {
                     Shoot();
                 }
-            } else { 
+            }
+            // take damage
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                TakeDamage(20);
             }
         }
 
@@ -78,6 +90,13 @@ namespace GameOnline.Photon
             {
                 bullet.GetComponent<PhotonView>().RPC("changeDirectionBullet", RpcTarget.AllBuffered);
             }
+        }
+
+        void TakeDamage(int damage)
+        {
+            currenHealth -= damage;
+
+            healthbar.SetHealth(currenHealth);
         }
 
         [PunRPC]
