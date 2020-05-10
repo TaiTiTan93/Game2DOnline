@@ -19,12 +19,14 @@ namespace GameOnline.Photon
         public Transform firePointLeft;
 
         private PhotonView photonView;
+        private Collider2D colliderPlayer;
 
         // Start is called before the first frame update
         void Start()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             photonView = GetComponent<PhotonView>();
+            colliderPlayer = GetComponent<Collider2D>();
             if (!photonView.IsMine)
             {
                 foreach (var scripts in scriptsToIgnore)
@@ -32,6 +34,7 @@ namespace GameOnline.Photon
                     scripts.enabled = false;
                 }
                 playerCamera.SetActive(false);
+                colliderPlayer.isTrigger = true;
             }
         }
 
@@ -44,6 +47,7 @@ namespace GameOnline.Photon
                 {
                     Shoot();
                 }
+            } else { 
             }
         }
 

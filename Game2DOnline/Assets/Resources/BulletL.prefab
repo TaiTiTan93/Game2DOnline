@@ -111,8 +111,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  damage: 40
   destroyTime: 2
   directionBulletRight: 1
+  impactEffect: {fileID: 0}
 --- !u!114 &154978275485708376
 MonoBehaviour:
   m_ObjectHideFlags: 0

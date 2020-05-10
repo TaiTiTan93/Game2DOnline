@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace GameOnline.Mechanics
@@ -7,6 +8,8 @@ namespace GameOnline.Mechanics
     public class Enemy : MonoBehaviour
     {
         // Start is called before the first frame update
+        public int health = 120;
+
         public Transform RangeRight;
         public Transform RangeLeft;
         public float speed = 1f;
@@ -14,9 +17,18 @@ namespace GameOnline.Mechanics
         //private SpriteRenderer spriteRendererEnemy;
 
         // Update is called once per frame
-        private void Start()
+        public void takeDamage(int damage)
         {
-
+            health -= damage;
+            if(health <= 0)
+            {
+                Die();
+            }
+        }
+        public void Die()
+        {
+            // if enemy die destroy enemy
+            Destroy(gameObject);
         }
 
         private void Update()

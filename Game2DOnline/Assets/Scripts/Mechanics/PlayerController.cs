@@ -9,6 +9,9 @@ namespace GameOnline.Mechanics
         public float maxSpeed = 6f;
         public float jumpTakeOffSpeed = 8f;
         public Animator animator;
+        public int maxHealth = 100;
+        public int currenHealth;
+        public Healthbar healthbar;
 
         private SpriteRenderer spriteRenderer;
         // Update is called once per frame
@@ -19,6 +22,9 @@ namespace GameOnline.Mechanics
 
         private void Awake()
         {
+            currenHealth = maxHealth;
+            healthbar.SetMaxHealth(maxHealth);
+
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -60,6 +66,19 @@ namespace GameOnline.Mechanics
             animator.SetBool("Grounded", IsGrounded);
             animator.SetFloat("Speed", Mathf.Abs(velocity.x) / maxSpeed);
             targetVelocity = move * maxSpeed;
+
+            // take damage
+            if(Input.GetKeyDown(KeyCode.D))
+            {
+                TakeDamage(20);
+            }
+        }
+
+        void TakeDamage(int damage)
+        {
+            currenHealth -= damage;
+
+            healthbar.SetHealth(currenHealth);
         }
     }
 }

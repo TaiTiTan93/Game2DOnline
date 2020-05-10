@@ -8,9 +8,14 @@ namespace GameOnline.Mechanics
     public class Bulet : MonoBehaviourPun
     {
         public float speed = 10f;
+        public int damage = 40;
         public float destroyTime = 2f;
         public bool directionBulletRight = true;
+        public GameObject impactEffect;
+        //public Rigidbody2D rb;
+
         private SpriteRenderer spriteRendererBullet;
+
         // Start is called before the first frame update
 
         // Destroy bullet 
@@ -24,6 +29,20 @@ namespace GameOnline.Mechanics
         private void Start()
         {
             spriteRendererBullet = GetComponent<SpriteRenderer>();
+            //rb.velocity = transform.right * Time.deltaTime * speed;
+        }
+
+        private void OnTriggerEnter2D(Collider2D hitInfor)
+        {
+            Enemy enemy =  hitInfor.GetComponent<Enemy>();
+            if(enemy != null)
+            {
+                enemy.takeDamage(damage);
+                Instantiate(impactEffect, transform.position, transform.rotation);
+                // if bullet collisder vs enemy destroys bullet
+                Destroy(gameObject);
+            }
+            
         }
         void Update()
         {
@@ -37,6 +56,7 @@ namespace GameOnline.Mechanics
                 transform.Translate(Vector2.left * Time.deltaTime * speed);
                 spriteRendererBullet.flipX = true;
             }
+            Destroy(gameObject, 3f);
         }
         
 
