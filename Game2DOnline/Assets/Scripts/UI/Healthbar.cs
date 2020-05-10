@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameOnline.Mechanics
+namespace GameOnline.UI
 {
     public class Healthbar : MonoBehaviour
     {
