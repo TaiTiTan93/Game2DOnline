@@ -114,7 +114,8 @@ MonoBehaviour:
   damage: 40
   destroyTime: 2
   directionBulletRight: 1
-  impactEffect: {fileID: 0}
+  impactEffect: {fileID: 8400681132847960293, guid: fd7291d44f09a6f418c017e00ef22aea,
+    type: 3}
 --- !u!114 &154978275485708376
 MonoBehaviour:
   m_ObjectHideFlags: 0

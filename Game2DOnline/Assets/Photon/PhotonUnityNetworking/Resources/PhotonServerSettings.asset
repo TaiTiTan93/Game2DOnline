@@ -42,6 +42,11 @@ MonoBehaviour:
   - changeDirection
   - destroy
   - changeDirectionBullet
+  - SetHealth
+  - SetMaxHealth
+  - TakeDamage
+  - Die
+  - ChangeDirectionBullet
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

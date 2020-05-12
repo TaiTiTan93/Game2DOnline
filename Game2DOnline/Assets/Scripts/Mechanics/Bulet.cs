@@ -34,7 +34,7 @@ namespace GameOnline.Mechanics
 
         private void OnTriggerEnter2D(Collider2D hitInfor)
         {
-            Enemy enemy =  hitInfor.GetComponent<Enemy>();
+            EnemyController enemy =  hitInfor.GetComponent<EnemyController>();
             if(enemy != null)
             {
                 enemy.takeDamage(damage);
@@ -56,7 +56,7 @@ namespace GameOnline.Mechanics
                 transform.Translate(Vector2.left * Time.deltaTime * speed);
                 spriteRendererBullet.flipX = true;
             }
-            Destroy(gameObject, 3f);
+            Destroy(gameObject, (float)7f/speed);
         }
         
 

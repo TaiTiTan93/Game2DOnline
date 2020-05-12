@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameOnline.UI;
+using GameOnline.HUB;
 
 namespace GameOnline.Mechanics
 {
@@ -9,32 +9,40 @@ namespace GameOnline.Mechanics
     {
         public float maxSpeed = 6f;
         public float jumpTakeOffSpeed = 8f;
+
         public Animator animator;
-        public int maxHealth = 100;
-        public int currenHealth;
-        public Healthbar healthbar;
+
+        //protected bool shooted = false;
+
+        public Joystick joystick;
 
         private SpriteRenderer spriteRenderer;
-        // Update is called once per frame
-        //private void Start()
-        //{
 
-        //}
+        public float coolDown = 1f;
+        public float coolDownTime;
+        // Update is called once per frame
 
         private void Awake()
         {
-            //currenHealth = maxHealth;
-            //healthbar.SetMaxHealth(maxHealth);
-
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+
         protected override void ComputeVelocity()
         {
+            if (coolDownTime > 0)
+                coolDownTime -= Time.deltaTime;
+            if (coolDownTime < 0)
+                coolDownTime = 0;
+
             // move to hozizontal
             Vector2 move = Vector2.zero;
-            move.x = Input.GetAxis("Horizontal");
+
+
+            
+
+            move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
             // jump
             if (Input.GetButtonDown("Jump") && IsGrounded)
             {
@@ -48,9 +56,10 @@ namespace GameOnline.Mechanics
                 }
             }
             // shoot animation
-            if(Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && coolDownTime == 0)
             {
-                animator.SetBool("Shoot", true);
+                animator.SetBool("Shoot", Input.GetKeyDown(KeyCode.F));
+                coolDownTime = coolDown;
             }
             if (Input.GetKeyUp(KeyCode.F))
             {
@@ -58,6 +67,7 @@ namespace GameOnline.Mechanics
             }
 
             // flip animation (direction) object
+
             bool flipSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < -0.01f));
             if (flipSprite)
             {
@@ -68,19 +78,7 @@ namespace GameOnline.Mechanics
             animator.SetFloat("Speed", Mathf.Abs(velocity.x) / maxSpeed);
             targetVelocity = move * maxSpeed;
 
-            // take damage
-            //if(Input.GetKeyDown(KeyCode.D))
-            //{
-            //    TakeDamage(20);
-            //}
         }
-
-        //void TakeDamage(int damage)
-        //{
-        //    currenHealth -= damage;
-
-        //    healthbar.SetHealth(currenHealth);
-        //}
     }
 }
 
