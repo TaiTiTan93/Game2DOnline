@@ -55,7 +55,7 @@ namespace GameOnline.Network
             if (photonView.IsMine)
             {
                 ChangerDirection();
-                if (Input.GetKeyDown(KeyCode.F)&&coolDownTime==0)
+                if (Input.GetButtonDown("Fire1") && coolDownTime == 0)
                 {
                     Shoot();
                     coolDownTime = coolDown;

@@ -56,12 +56,12 @@ namespace GameOnline.Mechanics
                 }
             }
             // shoot animation
-            if (Input.GetKeyDown(KeyCode.F) && coolDownTime == 0)
+            if (Input.GetButtonDown("Fire1") && coolDownTime == 0)
             {
                 animator.SetBool("Shoot", Input.GetKeyDown(KeyCode.F));
                 coolDownTime = coolDown;
             }
-            if (Input.GetKeyUp(KeyCode.F))
+            if (Input.GetButtonUp("Fire1"))
             {
                 animator.SetBool("Shoot", false);
             }
