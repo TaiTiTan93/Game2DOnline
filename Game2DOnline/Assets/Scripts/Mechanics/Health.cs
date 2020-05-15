@@ -20,22 +20,19 @@ namespace GameOnline.Mechanics
 
             photonView = GetComponent<PhotonView>();
         }
-        
-
-        // Update is called once per frame
-        void Update()
+        public void TakaDamage(int damage)
         {
-            if(Input.GetKeyDown(KeyCode.D) && photonView.IsMine)
-            {
-                photonView.RPC("TakeDamage", RpcTarget.AllBuffered);
-            }
+            currenHealth -= damage;
+            photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
+            Debug.Log(currenHealth);
         }
 
+
         [PunRPC]
-        public void TakeDamage()
+        public void fixHealthBar()
         {
-            currenHealth -= 20;
             healthbar.SetHealth(currenHealth);
+            Debug.Log(currenHealth);
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

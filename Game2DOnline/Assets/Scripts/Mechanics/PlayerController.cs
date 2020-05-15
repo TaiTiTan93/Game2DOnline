@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameOnline.HUB;
+using Photon.Pun;
 
 namespace GameOnline.Mechanics
 {
@@ -9,6 +10,8 @@ namespace GameOnline.Mechanics
     {
         public float maxSpeed = 6f;
         public float jumpTakeOffSpeed = 8f;
+
+        public Health health;
 
         public Animator animator;
 
@@ -19,15 +22,21 @@ namespace GameOnline.Mechanics
         private SpriteRenderer spriteRenderer;
 
         public float coolDown = 1f;
-        public float coolDownTime;
+        private float coolDownTime;
         // Update is called once per frame
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            health = GetComponent<Health>();
         }
 
+        public void playerTakeDamage(int damage)
+        {
+            health.TakaDamage(damage);
+            //health.fixHealthBar();
+        }
 
         protected override void ComputeVelocity()
         {
@@ -39,7 +48,10 @@ namespace GameOnline.Mechanics
             // move to hozizontal
             Vector2 move = Vector2.zero;
 
-
+            if(health.currenHealth <= 0 && this.GetComponent<PhotonView>().IsMine)
+            {
+                this.GetComponent<PhotonView>().RPC("playerDestroy", RpcTarget.AllBuffered);
+            }
             
 
             move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
@@ -58,7 +70,7 @@ namespace GameOnline.Mechanics
             // shoot animation
             if (Input.GetButtonDown("Fire1") && coolDownTime == 0)
             {
-                animator.SetBool("Shoot", Input.GetKeyDown(KeyCode.F));
+                animator.SetBool("Shoot", true);
                 coolDownTime = coolDown;
             }
             if (Input.GetButtonUp("Fire1"))
@@ -78,6 +90,11 @@ namespace GameOnline.Mechanics
             animator.SetFloat("Speed", Mathf.Abs(velocity.x) / maxSpeed);
             targetVelocity = move * maxSpeed;
 
+        }
+        [PunRPC]
+        public void playerDestroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

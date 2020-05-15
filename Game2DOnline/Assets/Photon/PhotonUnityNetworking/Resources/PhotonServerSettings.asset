@@ -25,28 +25,26 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: jp
-  PunLogging: 2
+  DevRegion: asia
+  PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - changeDirectionBullet
   - ClickRpc
+  - destroy
   - DestroyRpc
   - DestroySpaceship
+  - Die
   - Fire
-  - RespawnSpaceship
   - OnDrectionchange_LEFT
   - OnDrectionchange_RIGHT
-  - Destroy
-  - changeDirection
-  - destroy
-  - changeDirectionBullet
-  - SetHealth
-  - SetMaxHealth
+  - RespawnSpaceship
   - TakeDamage
-  - Die
-  - ChangeDirectionBullet
+  - fixHealth
+  - fixHealthBar
+  - playerDestroy
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 1

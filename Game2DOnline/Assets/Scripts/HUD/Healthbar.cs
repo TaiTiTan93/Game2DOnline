@@ -18,6 +18,7 @@ namespace GameOnline.HUB
         public void SetHealth(int health)
         {
             slider.value = health;
+            Debug.Log("da set");
         }
     }
 }

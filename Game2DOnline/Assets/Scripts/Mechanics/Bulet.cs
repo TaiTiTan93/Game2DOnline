@@ -9,10 +9,12 @@ namespace GameOnline.Mechanics
     {
         public float speed = 10f;
         public int damage = 40;
+        public float range = 8f;
         public float destroyTime = 2f;
         public bool directionBulletRight = true;
         public GameObject impactEffect;
-        //public Rigidbody2D rb;
+
+        private Transform player;
 
         private SpriteRenderer spriteRendererBullet;
 
@@ -29,7 +31,7 @@ namespace GameOnline.Mechanics
         private void Start()
         {
             spriteRendererBullet = GetComponent<SpriteRenderer>();
-            //rb.velocity = transform.right * Time.deltaTime * speed;
+            player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         private void OnTriggerEnter2D(Collider2D hitInfor)
@@ -56,7 +58,8 @@ namespace GameOnline.Mechanics
                 transform.Translate(Vector2.left * Time.deltaTime * speed);
                 spriteRendererBullet.flipX = true;
             }
-            Destroy(gameObject, (float)7f/speed);
+            if (Vector2.Distance(transform.position, player.position) >= range)
+                Destroy(gameObject);
         }
         
 

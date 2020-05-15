@@ -1,8 +1,11 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static GameOnline.Core.Simulation;
+using GameOnline.Core;
+using Photon.Realtime;
+
 
 namespace GameOnline.Mechanics
 {
@@ -10,12 +13,13 @@ namespace GameOnline.Mechanics
     {
         // Start is called before the first frame update
         public int health = 120;
+        public int damage =20;
 
         public PatrolPath path;
         internal PatrolPath.Mover mover;
         public AnimationController control;
 
-
+        internal Collider2D _collider;
         SpriteRenderer spriteRenderer;
 
         // Update is called once per frame
@@ -23,8 +27,18 @@ namespace GameOnline.Mechanics
         {
             control = GetComponent<AnimationController>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<Collider2D>();
         }
 
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            var player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.playerTakeDamage(damage);
+            }
+        }
         public void takeDamage(int damage)
         {
             health -= damage;

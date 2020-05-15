@@ -53,6 +53,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -64,6 +65,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -75,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 30b91426736b4864dbe46d35bf19e4db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -184,7 +186,7 @@ MonoBehaviour:
   minGroundNormalY: 0.65
   gravityModifier: 1
   velocity: {x: 0, y: 0}
-  maxSpeed: 7
+  maxSpeed: 3
   jumpTakeOffSpeed: 7
   move: {x: 0, y: 0}
   jump: 0
@@ -202,8 +204,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 120
+  eRange: 10
+  coolDown: 1
   path: {fileID: 8264864952219570427, guid: 684cd2997a4365c42b66f3ece8b29ced, type: 3}
   control: {fileID: 0}
+  player: {fileID: 5122186317621693625, guid: 71c2436f4fe446f45a2256956e2ab46d, type: 3}
+  eBullet: {fileID: 319342776090594789, guid: 3f91daca001346c429c1e45c3d8a5342, type: 3}
 --- !u!114 &4249256870684653859
 MonoBehaviour:
   m_ObjectHideFlags: 0

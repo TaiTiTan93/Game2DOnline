@@ -19,10 +19,10 @@ namespace GameOnline.Network
         public Transform firePointRight;
         public Transform firePointLeft;
 
-        public Health health;
-
-        public float coolDown = 1f;
+        public float coolDown = .5f;
         public float coolDownTime;
+
+        public Health playerHealth;
 
         private PhotonView photonView;
         private Collider2D colliderPlayer;
@@ -34,6 +34,7 @@ namespace GameOnline.Network
             spriteRenderer = GetComponent<SpriteRenderer>();
             photonView = GetComponent<PhotonView>();
             colliderPlayer = GetComponent<Collider2D>();
+            playerHealth = GetComponent<Health>();
             if (!photonView.IsMine)
             {
                 foreach (var scripts in scriptsToIgnore)
@@ -60,10 +61,10 @@ namespace GameOnline.Network
                     Shoot();
                     coolDownTime = coolDown;
                 }
-            }
-            if (health.currenHealth <= 0)
-            {
-                photonView.RPC("Die", RpcTarget.AllBuffered);
+                if (playerHealth.currenHealth <= 0)
+                {
+                    
+                }
             }
         }
 
@@ -94,12 +95,6 @@ namespace GameOnline.Network
             {
                 bullet.GetComponent<PhotonView>().RPC("changeDirectionBullet", RpcTarget.AllBuffered);
             }
-        }
-
-    [PunRPC]
-        public void Die()
-        {
-            Destroy(gameObject);
         }
     
 
