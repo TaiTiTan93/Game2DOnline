@@ -30,15 +30,6 @@ namespace GameOnline.Mechanics
             _collider = GetComponent<Collider2D>();
         }
 
-
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            var player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                player.playerTakeDamage(damage);
-            }
-        }
         public void takeDamage(int damage)
         {
             health -= damage;

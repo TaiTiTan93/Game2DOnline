@@ -45,6 +45,8 @@ MonoBehaviour:
   - fixHealth
   - fixHealthBar
   - playerDestroy
+  - TakaDamage
+  - _damage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

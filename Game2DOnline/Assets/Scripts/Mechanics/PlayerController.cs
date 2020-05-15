@@ -6,12 +6,16 @@ using Photon.Pun;
 
 namespace GameOnline.Mechanics
 {
-    public class PlayerController : KinematicObject
+    public class PlayerController : KinematicObject, IPunObservable
     {
         public float maxSpeed = 6f;
         public float jumpTakeOffSpeed = 8f;
 
-        public Health health;
+        public int maxHealth = 100;
+        public int currenHealth;
+        public Healthbar healthbar;
+
+        protected PhotonView photonView;
 
         public Animator animator;
 
@@ -25,17 +29,16 @@ namespace GameOnline.Mechanics
         private float coolDownTime;
         // Update is called once per frame
 
+        protected override void Start()
+        {
+            healthbar.SetMaxHealth(maxHealth);
+            currenHealth = maxHealth;
+        }    
         private void Awake()
         {
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-            health = GetComponent<Health>();
-        }
-
-        public void playerTakeDamage(int damage)
-        {
-            health.TakaDamage(damage);
-            //health.fixHealthBar();
+            photonView = GetComponent<PhotonView>();
         }
 
         protected override void ComputeVelocity()
@@ -48,9 +51,9 @@ namespace GameOnline.Mechanics
             // move to hozizontal
             Vector2 move = Vector2.zero;
 
-            if(health.currenHealth <= 0 && this.GetComponent<PhotonView>().IsMine)
+            if(currenHealth <= 0)
             {
-                this.GetComponent<PhotonView>().RPC("playerDestroy", RpcTarget.AllBuffered);
+                photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
             }
             
 
@@ -91,10 +94,44 @@ namespace GameOnline.Mechanics
             targetVelocity = move * maxSpeed;
 
         }
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(photonView.IsMine)
+            {
+                var enemy = collision.gameObject.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
+                    Debug.Log("player take damage");
+                }
+            }
+        }
+
         [PunRPC]
         public void playerDestroy()
         {
             Destroy(gameObject);
+        }
+
+        [PunRPC]
+        public void fixHealthBar()
+        {
+            currenHealth -= 20;
+            healthbar.SetHealth(currenHealth);
+            Debug.Log(currenHealth);
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(currenHealth);
+            }
+            else if (stream.IsReading)
+            {
+                currenHealth = (int)stream.ReceiveNext();
+            }
         }
     }
 }

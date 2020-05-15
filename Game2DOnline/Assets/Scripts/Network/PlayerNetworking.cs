@@ -22,8 +22,6 @@ namespace GameOnline.Network
         public float coolDown = .5f;
         public float coolDownTime;
 
-        public Health playerHealth;
-
         private PhotonView photonView;
         private Collider2D colliderPlayer;
 
@@ -34,7 +32,6 @@ namespace GameOnline.Network
             spriteRenderer = GetComponent<SpriteRenderer>();
             photonView = GetComponent<PhotonView>();
             colliderPlayer = GetComponent<Collider2D>();
-            playerHealth = GetComponent<Health>();
             if (!photonView.IsMine)
             {
                 foreach (var scripts in scriptsToIgnore)
@@ -60,10 +57,6 @@ namespace GameOnline.Network
                 {
                     Shoot();
                     coolDownTime = coolDown;
-                }
-                if (playerHealth.currenHealth <= 0)
-                {
-                    
                 }
             }
         }
