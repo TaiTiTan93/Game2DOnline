@@ -33,6 +33,13 @@ namespace GameOnline.Mechanics
         {
             healthbar.SetMaxHealth(maxHealth);
             currenHealth = maxHealth;
+
+            EnemyController[] enemies = GameObject.FindObjectsOfType<EnemyController>();
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                // set player vao enemy, bo cai code o start cua enemy di
+                enemies[i].SetActivePlayer(this);
+            }
         }    
         private void Awake()
         {
@@ -103,7 +110,6 @@ namespace GameOnline.Mechanics
                 if (enemy != null)
                 {
                     photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-                    Debug.Log("player take damage");
                 }
             }
         }
@@ -119,7 +125,6 @@ namespace GameOnline.Mechanics
         {
             currenHealth -= 20;
             healthbar.SetHealth(currenHealth);
-            Debug.Log(currenHealth);
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
