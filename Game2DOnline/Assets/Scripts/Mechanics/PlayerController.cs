@@ -39,7 +39,8 @@ namespace GameOnline.Mechanics
             for (int i = 0; i < enemies.Length; i++)
             {
                 // set player vao enemy, bo cai code o start cua enemy di
-                enemies[i].SetActivePlayer(this);
+                if (photonView.IsMine)
+                    enemies[i].SetActivePlayer(this);
             }
         }    
         private void Awake()
@@ -56,18 +57,17 @@ namespace GameOnline.Mechanics
             if (coolDownTime < 0)
                 coolDownTime = 0;
 
-            // move to hozizontal
-            Vector2 move = Vector2.zero;
-
             if(currenHealth <= 0)
             {
                 animator.SetBool("Death", true);
-                FindObjectOfType<AudioManager>().Play("PlayerDeath");
                 photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
+                FindObjectOfType<AudioManager>().Play("PlayerDeath");
             }
 
-
+            // move to hozizontal
+            Vector2 move = Vector2.zero;
             move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
+
             // jump
             if (Input.GetButtonDown("Jump") && IsGrounded)
             {
@@ -108,19 +108,8 @@ namespace GameOnline.Mechanics
         public void playerTakeDamage(int damage)
         {
             amount = damage;
-            FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
             photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-        }
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            if(photonView.IsMine)
-            {
-                var enemy = collision.gameObject.GetComponent<EnemyController>();
-                if (enemy != null)
-                {
-                    photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-                }
-            }
+            FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
         }
 
         [PunRPC]

@@ -33821,7 +33821,7 @@ MonoBehaviour:
   - name: PlayerDeath
     clip: {fileID: 8300000, guid: b1f60b8b28a0e8d41b6c70b7e3481ceb, type: 3}
     volume: 1
-    pitch: 1.5
+    pitch: 0.1
     loop: 0
     source: {fileID: 0}
 --- !u!4 &1382083094
