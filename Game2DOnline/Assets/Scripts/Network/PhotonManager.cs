@@ -16,10 +16,6 @@ namespace GameOnline.Network
         }
 
         // Update is called once per frame
-        void Update()
-        {
-
-        }
         public override void OnConnectedToMaster()
         {
             PhotonNetwork.JoinLobby();

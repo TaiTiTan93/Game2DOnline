@@ -5,7 +5,7 @@ using UnityEngine;
 using static GameOnline.Core.Simulation;
 using GameOnline.Core;
 using Photon.Realtime;
-
+using Photon.Pun;
 
 namespace GameOnline.Mechanics
 {
@@ -44,6 +44,15 @@ namespace GameOnline.Mechanics
         {
             player = p.transform;
         }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            var player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.playerTakeDamage(40);
+            }
+        }
         public void takeDamage(int damage)
         {
             health -= damage;
@@ -69,7 +78,8 @@ namespace GameOnline.Mechanics
             {
                 if(timeCoolDown<=0)
                 {
-                    Instantiate(eBullet, transform.position, Quaternion.identity);
+                    //Instantiate(eBullet, transform.position, Quaternion.identity);
+                    PhotonNetwork.Instantiate(eBullet.name, transform.position, Quaternion.identity);
                     timeCoolDown = coolDown;
                 }
                 else

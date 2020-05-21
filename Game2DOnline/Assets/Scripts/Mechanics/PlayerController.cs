@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using GameOnline.HUB;
 using Photon.Pun;
+using GameOnline.Network;
 
 namespace GameOnline.Mechanics
 {
@@ -27,6 +29,8 @@ namespace GameOnline.Mechanics
 
         public float coolDown = 1f;
         private float coolDownTime;
+        private int Amount;
+
         // Update is called once per frame
 
         protected override void Start()
@@ -55,15 +59,14 @@ namespace GameOnline.Mechanics
             if (coolDownTime < 0)
                 coolDownTime = 0;
 
-            // move to hozizontal
-            Vector2 move = Vector2.zero;
-
             if(currenHealth <= 0)
             {
                 photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
+                FindObjectOfType<AudioManager>().Play("PlayerDeath");
+                animator.SetBool("Died", true);
             }
-            
-
+            // move to hozizontal
+            Vector2 move = Vector2.zero;
             move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
             // jump
             if (Input.GetButtonDown("Jump") && IsGrounded)
@@ -82,6 +85,7 @@ namespace GameOnline.Mechanics
             {
                 animator.SetBool("Shoot", true);
                 coolDownTime = coolDown;
+                FindObjectOfType<AudioManager>().Play("PlayerShoot");
             }
             if (Input.GetButtonUp("Fire1"))
             {
@@ -102,28 +106,26 @@ namespace GameOnline.Mechanics
 
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+
+        public void playerTakeDamage(int damage)
         {
-            if(photonView.IsMine)
+            if (photonView.IsMine)
             {
-                var enemy = collision.gameObject.GetComponent<EnemyController>();
-                if (enemy != null)
-                {
-                    photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-                }
+                Amount = damage;
+                FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
+                photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
             }
         }
-
         [PunRPC]
         public void playerDestroy()
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 2f);
         }
 
         [PunRPC]
         public void fixHealthBar()
         {
-            currenHealth -= 20;
+            currenHealth -= Amount;
             healthbar.SetHealth(currenHealth);
         }
 
@@ -132,6 +134,7 @@ namespace GameOnline.Mechanics
             if (stream.IsWriting)
             {
                 stream.SendNext(currenHealth);
+
             }
             else if (stream.IsReading)
             {
