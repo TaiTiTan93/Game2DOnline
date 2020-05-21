@@ -61,7 +61,7 @@ namespace GameOnline.Mechanics
             {
                 animator.SetBool("Death", true);
                 photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
-                FindObjectOfType<AudioManager>().Play("PlayerDeath");
+                //FindObjectOfType<AudioManager>().Play("PlayerDeath");
             }
 
             // move to hozizontal
@@ -115,6 +115,7 @@ namespace GameOnline.Mechanics
         [PunRPC]
         public void playerDestroy()
         {
+            FindObjectOfType<AudioManager>().Play("PlayerDeath");
             Destroy(gameObject, 2f);
         }
 

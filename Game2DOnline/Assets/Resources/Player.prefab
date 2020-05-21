@@ -493,7 +493,6 @@ MonoBehaviour:
   maxHealth: 100
   currenHealth: 0
   healthbar: {fileID: 2359693385552141797}
-  photonViewHBar: {fileID: 8429582295790506281}
   animator: {fileID: 7390612841394862464}
   joystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
     type: 3}
