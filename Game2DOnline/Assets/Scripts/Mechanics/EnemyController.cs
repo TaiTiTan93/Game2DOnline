@@ -14,32 +14,27 @@ namespace GameOnline.Mechanics
         // Start is called before the first frame update
         public int health = 120;
         public int damage =20;
-        public float eRange = 5f;
-
-        public GameObject eBullet;
-        public float coolDown;
-        public float timeCoolDown;
 
         public PatrolPath path;
-        public AnimationController control;
-        public Transform player;
-
         internal PatrolPath.Mover mover;
-        internal Collider2D _collider;
+        public AnimationController control;
 
+        internal Collider2D _collider;
         SpriteRenderer spriteRenderer;
+        private Transform player;
+        private float eRange;
+        private int timeCoolDown;
+        private object eBullet;
+        private int coolDown;
 
         // Update is called once per frame
-        //private void Start()
-        //{
-        //    player = GameObject.FindGameObjectWithTag("Player").transform;
-        //}
         void Awake()
         {
             control = GetComponent<AnimationController>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             _collider = GetComponent<Collider2D>();
         }
+
         public void SetActivePlayer(PlayerController p)
         {
             player = p.transform;
@@ -53,6 +48,7 @@ namespace GameOnline.Mechanics
                 player.playerTakeDamage(40);
             }
         }
+
         public void takeDamage(int damage)
         {
             health -= damage;
@@ -79,7 +75,7 @@ namespace GameOnline.Mechanics
                 if(timeCoolDown<=0)
                 {
                     //Instantiate(eBullet, transform.position, Quaternion.identity);
-                    PhotonNetwork.Instantiate(eBullet.name, transform.position, Quaternion.identity);
+                    PhotonNetwork.Instantiate("eBullet", transform.position, Quaternion.identity);
                     timeCoolDown = coolDown;
                 }
                 else
@@ -87,6 +83,7 @@ namespace GameOnline.Mechanics
                     timeCoolDown -= Time.deltaTime;
                 }
             }
+
         }
 
     }

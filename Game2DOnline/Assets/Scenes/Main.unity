@@ -32996,12 +32996,12 @@ PrefabInstance:
     - target: {fileID: 4249256870684653861, guid: 2d45bf5145add22448eb97d0f36b0c5f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.564439
+      value: 2.7544394
       objectReference: {fileID: 0}
     - target: {fileID: 4249256870684653861, guid: 2d45bf5145add22448eb97d0f36b0c5f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.169612
+      value: -1.910388
       objectReference: {fileID: 0}
     - target: {fileID: 4249256870684653861, guid: 2d45bf5145add22448eb97d0f36b0c5f,
         type: 3}
@@ -43057,12 +43057,12 @@ PrefabInstance:
     - target: {fileID: 8264864952219570424, guid: 684cd2997a4365c42b66f3ece8b29ced,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.34
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 8264864952219570424, guid: 684cd2997a4365c42b66f3ece8b29ced,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.29
+      value: -2.65
       objectReference: {fileID: 0}
     - target: {fileID: 8264864952219570424, guid: 684cd2997a4365c42b66f3ece8b29ced,
         type: 3}
@@ -43119,12 +43119,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8264864952219570426, guid: 684cd2997a4365c42b66f3ece8b29ced,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000,
-        type: 0}
     - target: {fileID: 8264864952219570427, guid: 684cd2997a4365c42b66f3ece8b29ced,
         type: 3}
       propertyPath: startPosition.x
@@ -43133,7 +43127,7 @@ PrefabInstance:
     - target: {fileID: 8264864952219570427, guid: 684cd2997a4365c42b66f3ece8b29ced,
         type: 3}
       propertyPath: endPosition.x
-      value: 3.5
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684cd2997a4365c42b66f3ece8b29ced, type: 3}

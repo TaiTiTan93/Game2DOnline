@@ -37,13 +37,6 @@ namespace GameOnline.Mechanics
         {
             healthbar.SetMaxHealth(maxHealth);
             currenHealth = maxHealth;
-
-            EnemyController[] enemies = GameObject.FindObjectsOfType<EnemyController>();
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                // set player vao enemy, bo cai code o start cua enemy di
-                enemies[i].SetActivePlayer(this);
-            }
         }    
         private void Awake()
         {
@@ -111,9 +104,18 @@ namespace GameOnline.Mechanics
         {
             if (photonView.IsMine)
             {
+<<<<<<< HEAD
                 Amount = damage;
                 FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
                 photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
+=======
+                var enemy = collision.gameObject.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
+                    Debug.Log("player take damage");
+                }
+>>>>>>> parent of 10203a9... 90%
             }
         }
         [PunRPC]
@@ -127,6 +129,7 @@ namespace GameOnline.Mechanics
         {
             currenHealth -= Amount;
             healthbar.SetHealth(currenHealth);
+            Debug.Log(currenHealth);
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
