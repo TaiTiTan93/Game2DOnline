@@ -14,44 +14,31 @@ namespace GameOnline.Mechanics
         // Start is called before the first frame update
         public int health = 120;
         public int damage =20;
+        public float eRange = 5f;
+
+        public GameObject eBullet;
+        public float coolDown;
+        public float timeCoolDown;
 
         public PatrolPath path;
-        internal PatrolPath.Mover mover;
         public AnimationController control;
+        public Transform player;
 
+        internal PatrolPath.Mover mover;
         internal Collider2D _collider;
-        SpriteRenderer spriteRenderer;
-        private Transform player;
-        private float eRange;
-        private float timeCoolDown;
-        private object eBullet;
-        private float coolDown;
 
-        // Update is called once per frame
+        SpriteRenderer spriteRenderer;
+
         void Awake()
         {
             control = GetComponent<AnimationController>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             _collider = GetComponent<Collider2D>();
         }
-
         public void SetActivePlayer(PlayerController p)
         {
             player = p.transform;
         }
-<<<<<<< HEAD
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            var player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                player.PlayerTakeDamage(40);
-            }
-        }
-
-=======
->>>>>>> parent of bebe7f3... abc
         public void takeDamage(int damage)
         {
             health -= damage;
@@ -66,6 +53,14 @@ namespace GameOnline.Mechanics
             Destroy(gameObject);
         }
 
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            var player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.playerTakeDamage(40);
+            }
+        }
         void Update()
         {
             if (path != null)
@@ -77,21 +72,14 @@ namespace GameOnline.Mechanics
             {
                 if(timeCoolDown<=0)
                 {
-<<<<<<< HEAD
-                    //Instantiate(eBullet, transform.position, Quaternion.identity);
-                    PhotonNetwork.Instantiate("eBullet", transform.position, Quaternion.identity);
-                    //Instantiate(eBullet, transform.position, Quaternion.identity);
-=======
                     Instantiate(eBullet, transform.position, Quaternion.identity);
->>>>>>> parent of bebe7f3... abc
                     timeCoolDown = coolDown;
                 }
                 else
                 {
-                    timeCoolDown = -Time.deltaTime;
+                    timeCoolDown -= Time.deltaTime;
                 }
             }
-
         }
 
     }

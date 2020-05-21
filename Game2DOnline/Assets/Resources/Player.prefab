@@ -473,7 +473,7 @@ MonoBehaviour:
   animator: {fileID: 7390612841394862464}
   joystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
     type: 3}
-  coolDown: 1
+  coolDown: 0.5
 --- !u!114 &5690482480622558220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
     type: 3}
   firePointRight: {fileID: 481495783044967305}
   firePointLeft: {fileID: 4250509322271359296}
-  coolDown: 1
+  coolDown: 0.5
   coolDownTime: 0
 --- !u!114 &1416713188988188429
 MonoBehaviour:
@@ -596,6 +596,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: Shoot
+  - Type: 4
+    SynchronizeType: 0
+    Name: Death
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

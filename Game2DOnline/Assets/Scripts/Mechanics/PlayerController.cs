@@ -12,8 +12,8 @@ namespace GameOnline.Mechanics
         public float jumpTakeOffSpeed = 8f;
 
         public int maxHealth = 100;
-        public int Amount;
         public int currenHealth;
+        protected int amount;
         public Healthbar healthbar;
 
         protected PhotonView photonView;
@@ -34,6 +34,13 @@ namespace GameOnline.Mechanics
         {
             healthbar.SetMaxHealth(maxHealth);
             currenHealth = maxHealth;
+
+            EnemyController[] enemies = GameObject.FindObjectsOfType<EnemyController>();
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                // set player vao enemy, bo cai code o start cua enemy di
+                enemies[i].SetActivePlayer(this);
+            }
         }    
         private void Awake()
         {
@@ -54,16 +61,12 @@ namespace GameOnline.Mechanics
 
             if(currenHealth <= 0)
             {
+                animator.SetBool("Death", true);
+                FindObjectOfType<AudioManager>().Play("PlayerDeath");
                 photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
             }
-<<<<<<< HEAD
 
-            // move to hozizontal
-            Vector2 move = Vector2.zero;
-=======
-            
 
->>>>>>> parent of bebe7f3... abc
             move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
             // jump
             if (Input.GetButtonDown("Jump") && IsGrounded)
@@ -81,6 +84,7 @@ namespace GameOnline.Mechanics
             if (Input.GetButtonDown("Fire1") && coolDownTime == 0)
             {
                 animator.SetBool("Shoot", true);
+                FindObjectOfType<AudioManager>().Play("PlayerShoot");
                 coolDownTime = coolDown;
             }
             if (Input.GetButtonUp("Fire1"))
@@ -101,18 +105,12 @@ namespace GameOnline.Mechanics
             targetVelocity = move * maxSpeed;
 
         }
-
-<<<<<<< HEAD
-        public void PlayerTakeDamage(int damage)
+        public void playerTakeDamage(int damage)
         {
-            if(photonView.IsMine)
-            {
-                Amount = damage;
-                //FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
-                {
-                    photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-                    Debug.Log("player take damage");
-=======
+            amount = damage;
+            FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
+            photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
+        }
         void OnCollisionEnter2D(Collision2D collision)
         {
             if(photonView.IsMine)
@@ -121,7 +119,6 @@ namespace GameOnline.Mechanics
                 if (enemy != null)
                 {
                     photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
->>>>>>> parent of bebe7f3... abc
                 }
             }
         }
@@ -129,15 +126,14 @@ namespace GameOnline.Mechanics
         [PunRPC]
         public void playerDestroy()
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 2f);
         }
 
         [PunRPC]
         public void fixHealthBar()
         {
-            currenHealth -= 20;
+            currenHealth -= amount;
             healthbar.SetHealth(currenHealth);
-            Debug.Log(currenHealth);
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
