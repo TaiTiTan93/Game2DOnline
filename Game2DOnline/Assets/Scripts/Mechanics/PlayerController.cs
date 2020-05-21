@@ -49,13 +49,21 @@ namespace GameOnline.Mechanics
             if (coolDownTime < 0)
                 coolDownTime = 0;
 
+            // move to hozizontal
+            Vector2 move = Vector2.zero;
+
             if(currenHealth <= 0)
             {
                 photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
             }
+<<<<<<< HEAD
 
             // move to hozizontal
             Vector2 move = Vector2.zero;
+=======
+            
+
+>>>>>>> parent of bebe7f3... abc
             move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
             // jump
             if (Input.GetButtonDown("Jump") && IsGrounded)
@@ -94,6 +102,7 @@ namespace GameOnline.Mechanics
 
         }
 
+<<<<<<< HEAD
         public void PlayerTakeDamage(int damage)
         {
             if(photonView.IsMine)
@@ -103,6 +112,16 @@ namespace GameOnline.Mechanics
                 {
                     photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
                     Debug.Log("player take damage");
+=======
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(photonView.IsMine)
+            {
+                var enemy = collision.gameObject.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
+>>>>>>> parent of bebe7f3... abc
                 }
             }
         }
@@ -116,7 +135,7 @@ namespace GameOnline.Mechanics
         [PunRPC]
         public void fixHealthBar()
         {
-            currenHealth -= Amount;
+            currenHealth -= 20;
             healthbar.SetHealth(currenHealth);
             Debug.Log(currenHealth);
         }
