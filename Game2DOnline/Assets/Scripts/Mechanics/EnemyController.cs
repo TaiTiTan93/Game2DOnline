@@ -5,7 +5,7 @@ using UnityEngine;
 using static GameOnline.Core.Simulation;
 using GameOnline.Core;
 using Photon.Realtime;
-
+using Photon.Pun;
 
 namespace GameOnline.Mechanics
 {
@@ -23,9 +23,9 @@ namespace GameOnline.Mechanics
         SpriteRenderer spriteRenderer;
         private Transform player;
         private float eRange;
-        private int timeCoolDown;
+        private float timeCoolDown;
         private object eBullet;
-        private int coolDown;
+        private float coolDown;
 
         // Update is called once per frame
         void Awake()
@@ -39,19 +39,16 @@ namespace GameOnline.Mechanics
         {
             player = p.transform;
         }
-<<<<<<< HEAD
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             var player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.playerTakeDamage(40);
+                player.PlayerTakeDamage(40);
             }
         }
 
-=======
->>>>>>> parent of bebe7f3... abc
         public void takeDamage(int damage)
         {
             health -= damage;
@@ -77,17 +74,14 @@ namespace GameOnline.Mechanics
             {
                 if(timeCoolDown<=0)
                 {
-<<<<<<< HEAD
                     //Instantiate(eBullet, transform.position, Quaternion.identity);
                     PhotonNetwork.Instantiate("eBullet", transform.position, Quaternion.identity);
-=======
-                    Instantiate(eBullet, transform.position, Quaternion.identity);
->>>>>>> parent of bebe7f3... abc
+                    //Instantiate(eBullet, transform.position, Quaternion.identity);
                     timeCoolDown = coolDown;
                 }
                 else
                 {
-                    timeCoolDown -= Time.deltaTime;
+                    timeCoolDown = -Time.deltaTime;
                 }
             }
 

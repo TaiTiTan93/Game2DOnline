@@ -12,6 +12,7 @@ namespace GameOnline.Mechanics
         public float jumpTakeOffSpeed = 8f;
 
         public int maxHealth = 100;
+        public int Amount;
         public int currenHealth;
         public Healthbar healthbar;
 
@@ -48,15 +49,13 @@ namespace GameOnline.Mechanics
             if (coolDownTime < 0)
                 coolDownTime = 0;
 
-            // move to hozizontal
-            Vector2 move = Vector2.zero;
-
             if(currenHealth <= 0)
             {
                 photonView.RPC("playerDestroy", RpcTarget.AllBuffered);
             }
-            
 
+            // move to hozizontal
+            Vector2 move = Vector2.zero;
             move.x = Input.GetAxis("Horizontal") + joystick.Horizontal;
             // jump
             if (Input.GetButtonDown("Jump") && IsGrounded)
@@ -95,29 +94,16 @@ namespace GameOnline.Mechanics
 
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        public void PlayerTakeDamage(int damage)
         {
             if(photonView.IsMine)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 Amount = damage;
-                FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
-                photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-=======
-=======
->>>>>>> parent of bebe7f3... abc
-                var enemy = collision.gameObject.GetComponent<EnemyController>();
-                if (enemy != null)
+                //FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
                 {
                     photonView.RPC("fixHealthBar", RpcTarget.AllBuffered);
-<<<<<<< HEAD
                     Debug.Log("player take damage");
                 }
->>>>>>> parent of 10203a9... 90%
-=======
-                }
->>>>>>> parent of bebe7f3... abc
             }
         }
 
@@ -130,7 +116,7 @@ namespace GameOnline.Mechanics
         [PunRPC]
         public void fixHealthBar()
         {
-            currenHealth -= 20;
+            currenHealth -= Amount;
             healthbar.SetHealth(currenHealth);
             Debug.Log(currenHealth);
         }
