@@ -22,7 +22,7 @@ namespace GameOnline.Network
         public float coolDown = .5f;
         public float coolDownTime;
 
-        protected PhotonView photonView;
+        private PhotonView photonView;
         private Collider2D colliderPlayer;
 
         // Start is called before the first frame update

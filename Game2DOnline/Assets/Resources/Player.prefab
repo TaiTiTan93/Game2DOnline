@@ -473,7 +473,7 @@ MonoBehaviour:
   animator: {fileID: 7390612841394862464}
   joystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
     type: 3}
-  coolDown: 0.5
+  coolDown: 1
 --- !u!114 &5690482480622558220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5122186317621693625}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc96bbaf0e1835449b91198ac95fa83c, type: 3}
   m_Name: 
@@ -497,7 +497,7 @@ MonoBehaviour:
     type: 3}
   firePointRight: {fileID: 481495783044967305}
   firePointLeft: {fileID: 4250509322271359296}
-  coolDown: 0.5
+  coolDown: 1
   coolDownTime: 0
 --- !u!114 &1416713188988188429
 MonoBehaviour:
@@ -596,9 +596,6 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: Shoot
-  - Type: 4
-    SynchronizeType: 1
-    Name: Died
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

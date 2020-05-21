@@ -207,7 +207,7 @@ MonoBehaviour:
   eRange: 10
 <<<<<<< HEAD
   eBullet: {fileID: 8691692505177159382, guid: b973c5878d560074089012960bf02963, type: 3}
-  coolDown: 5
+  coolDown: 2
   timeCoolDown: 0
 =======
   coolDown: 1
