@@ -13,9 +13,9 @@ namespace GameOnline.Mechanics
 
         public int maxHealth = 100;
         public int currenHealth;
-        protected int amount;
         public Healthbar healthbar;
 
+        protected int amount;
         protected PhotonView photonView;
 
         public Animator animator;
